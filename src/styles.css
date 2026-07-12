@@ -132,12 +132,12 @@
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-accent);
-}
 
-@utility eyebrow::before {
-  content: "";
-  width: 1.75rem;
-  height: 2px;
-  background: var(--color-accent);
-  display: inline-block;
+  &::before {
+    content: "";
+    width: 1.75rem;
+    height: 2px;
+    background: var(--color-accent);
+    display: inline-block;
+  }
 }
