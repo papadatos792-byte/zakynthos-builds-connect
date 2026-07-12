@@ -44,11 +44,12 @@ function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/85 to-primary/40" />
         </div>
 
-        <div className="container-x relative grid gap-10 py-16 md:py-28 lg:grid-cols-12 lg:items-center">
-          <div className="lg:col-span-7">
-            <span className="eyebrow">
+        <div className="container-x relative py-16 md:py-28">
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="eyebrow justify-center">
               <span className="sr-only">κατηγορία:</span>
               Ζάκυνθος · Ιόνιο
+
             </span>
             <h1 className="mt-4 font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
               Γυψοσανίδες, ψευδοροφές &amp; οικοδομικές{" "}
