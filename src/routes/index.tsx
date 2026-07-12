@@ -41,7 +41,7 @@ function HomePage() {
             width={1600}
             height={1100}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/85 to-primary/40" />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/85 to-primary" />
         </div>
 
         <div className="container-x relative py-16 md:py-28">
