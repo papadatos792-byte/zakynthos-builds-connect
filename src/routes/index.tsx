@@ -41,26 +41,28 @@ function HomePage() {
             width={1600}
             height={1100}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/85 to-primary/40" />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/85 to-primary" />
         </div>
 
-        <div className="container-x relative grid gap-10 py-16 md:py-28 lg:grid-cols-12 lg:items-center">
-          <div className="lg:col-span-7">
-            <span className="eyebrow">
+        <div className="container-x relative py-16 md:py-28">
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="eyebrow justify-center">
               <span className="sr-only">κατηγορία:</span>
               Ζάκυνθος · Ιόνιο
+
             </span>
             <h1 className="mt-4 font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
               Γυψοσανίδες, ψευδοροφές &amp; οικοδομικές{" "}
               <span className="text-accent">στη Ζάκυνθο</span>
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-primary-foreground/85 sm:text-lg">
+            <p className="mt-5 mx-auto max-w-2xl text-base leading-relaxed text-primary-foreground/85 sm:text-lg">
+
               {business.yearsExperience}+ χρόνια εμπειρίας σε κατοικίες, ξενοδοχεία και
               επαγγελματικούς χώρους. Καθαρή εγκατάσταση, σεβασμός στον χρόνο σου, εγγύηση
               αποτελέσματος.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Button asChild variant="brand" size="lg" className="h-12 px-6 text-base">
                 <Link to="/contact">
                   Ζήτα Προσφορά Τώρα <ArrowRight className="size-4" />
@@ -78,13 +80,14 @@ function HomePage() {
               </Button>
             </div>
 
-            <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-primary-foreground/15 pt-6">
+            <dl className="mt-12 mx-auto grid max-w-lg grid-cols-3 gap-6 border-t border-primary-foreground/15 pt-6">
               <Stat value={`${business.yearsExperience}+`} label="Χρόνια εμπειρίας" />
               <Stat value={`${business.projectsCompleted}+`} label="Ολοκληρωμένα έργα" />
               <Stat value="100%" label="Εγγύηση εργασίας" />
             </dl>
           </div>
         </div>
+
       </section>
 
       {/* Intro */}
