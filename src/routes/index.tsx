@@ -55,7 +55,8 @@ function HomePage() {
               Γυψοσανίδες, ψευδοροφές &amp; οικοδομικές{" "}
               <span className="text-accent">στη Ζάκυνθο</span>
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-primary-foreground/85 sm:text-lg">
+            <p className="mt-5 mx-auto max-w-2xl text-base leading-relaxed text-primary-foreground/85 sm:text-lg">
+
               {business.yearsExperience}+ χρόνια εμπειρίας σε κατοικίες, ξενοδοχεία και
               επαγγελματικούς χώρους. Καθαρή εγκατάσταση, σεβασμός στον χρόνο σου, εγγύηση
               αποτελέσματος.
