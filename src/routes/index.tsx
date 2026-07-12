@@ -80,13 +80,14 @@ function HomePage() {
               </Button>
             </div>
 
-            <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-primary-foreground/15 pt-6">
+            <dl className="mt-12 mx-auto grid max-w-lg grid-cols-3 gap-6 border-t border-primary-foreground/15 pt-6">
               <Stat value={`${business.yearsExperience}+`} label="Χρόνια εμπειρίας" />
               <Stat value={`${business.projectsCompleted}+`} label="Ολοκληρωμένα έργα" />
               <Stat value="100%" label="Εγγύηση εργασίας" />
             </dl>
           </div>
         </div>
+
       </section>
 
       {/* Intro */}
