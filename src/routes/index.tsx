@@ -62,7 +62,7 @@ function HomePage() {
               αποτελέσματος.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Button asChild variant="brand" size="lg" className="h-12 px-6 text-base">
                 <Link to="/contact">
                   Ζήτα Προσφορά Τώρα <ArrowRight className="size-4" />
