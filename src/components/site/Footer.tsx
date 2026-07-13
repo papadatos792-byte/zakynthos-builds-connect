@@ -80,12 +80,6 @@ export function Footer() {
           </h3>
           <ul className="mt-4 space-y-3 text-sm">
             <li className="flex items-start gap-3">
-              <MapPin className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
-              <span className="text-primary-foreground/85">
-                {business.address.street}, {business.address.postalCode} {business.address.city}
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
               <Phone className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
               <a href={business.phoneHref} className="text-primary-foreground/85 hover:text-accent">
                 {business.phone}
@@ -102,13 +96,7 @@ export function Footer() {
             </li>
             <li className="flex items-start gap-3">
               <Clock className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
-              <div className="text-primary-foreground/85">
-                {business.hours.map((h) => (
-                  <div key={h.day}>
-                    <span className="font-medium">{h.day}:</span> {h.time}
-                  </div>
-                ))}
-              </div>
+              <span className="text-primary-foreground/85">{business.availability}</span>
             </li>
           </ul>
         </div>
