@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, Mail, Clock } from "lucide-react";
 import { ContactForm } from "@/components/site/ContactForm";
 import { business } from "@/lib/business";
 
@@ -74,28 +74,12 @@ function ContactPage() {
                 }
               />
               <InfoCard
-                icon={<MapPin className="size-5" />}
-                title="Διεύθυνση"
-                body={
-                  <span>
-                    {business.address.street}
-                    <br />
-                    {business.address.postalCode} {business.address.city}
-                  </span>
-                }
-              />
-              <InfoCard
                 icon={<Clock className="size-5" />}
-                title="Ώρες λειτουργίας"
+                title="Διαθεσιμότητα"
                 body={
-                  <ul className="space-y-1 text-sm">
-                    {business.hours.map((h) => (
-                      <li key={h.day} className="flex justify-between gap-4">
-                        <span className="text-muted-foreground">{h.day}</span>
-                        <span className="font-medium text-foreground">{h.time}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <span className="text-sm font-medium text-foreground">
+                    {business.availability}
+                  </span>
                 }
               />
             </div>
