@@ -38,7 +38,7 @@ export function Header() {
         <div className="container-x flex h-9 items-center justify-between text-xs">
           <div className="flex items-center gap-2 opacity-90">
             <Clock className="size-3.5" aria-hidden />
-            <span>{business.hoursShort}</span>
+            <span>{business.availability}</span>
           </div>
           <a
             href={business.phoneHref}
