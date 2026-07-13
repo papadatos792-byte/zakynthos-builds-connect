@@ -3,9 +3,9 @@ export const business = {
   name: "Γυψοτεχνική Ζακύνθου",
   shortName: "Γυψοτεχνική",
   tagline: "Γυψοσανίδες & Οικοδομικές Εργασίες στη Ζάκυνθο",
-  phone: "26950 43210",
-  phoneHref: "tel:+302695043210",
-  email: "info@gypsotechniki-zakynthos.gr",
+  phone: "+30 697 399 3719",
+  phoneHref: "tel:+306973993719",
+  email: "lazourasdim@gmail.com",
   address: {
     street: "Λεωφ. Δημοκρατίας 45",
     city: "Ζάκυνθος",
