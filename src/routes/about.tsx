@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ShieldCheck, Award, Heart, Target, Handshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { business } from "@/lib/business";
-import teamImg from "@/assets/team.jpg";
+import logo from "@/assets/logo.png.asset.json";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -51,14 +51,14 @@ export function AboutPage() {
             </p>
           </div>
           <div className="lg:col-span-5">
-            <div className="overflow-hidden rounded-2xl border border-border shadow-card">
+            <div className="grid aspect-square place-items-center rounded-2xl border border-border bg-primary p-10 shadow-card">
               <img
-                src={teamImg}
+                src={logo.url}
                 alt={business.name}
-                width={1400}
-                height={1000}
+                width={400}
+                height={400}
                 loading="lazy"
-                className="size-full object-cover"
+                className="size-full max-w-xs object-contain"
               />
             </div>
           </div>
