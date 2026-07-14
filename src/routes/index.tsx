@@ -3,10 +3,8 @@ import { ArrowRight, ShieldCheck, Clock3, Award, Sparkles, Phone } from "lucide-
 import { Button } from "@/components/ui/button";
 import { services } from "@/lib/services-data";
 import { business } from "@/lib/business";
+import { projectPhotos } from "@/lib/projects-data";
 import heroImg from "@/assets/hero.jpg";
-import project1 from "@/assets/project-1.jpg";
-import project2 from "@/assets/project-2.jpg";
-import project3 from "@/assets/project-3.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -82,7 +80,7 @@ function HomePage() {
 
             <dl className="mt-12 mx-auto grid max-w-lg grid-cols-3 gap-6 border-t border-primary-foreground/15 pt-6">
               <Stat value={`${business.yearsExperience}+`} label="Χρόνια εμπειρίας" />
-              <Stat value={`${business.projectsCompleted}+`} label="Ολοκληρωμένα έργα" />
+              <Stat value={`${business.projectsCompleted}+`} label="Έργα παντού" />
               <Stat value="100%" label="Εγγύηση εργασίας" />
             </dl>
           </div>
@@ -102,7 +100,7 @@ function HomePage() {
               Η <strong className="text-foreground">{business.name}</strong> δραστηριοποιείται
               στη Ζάκυνθο εδώ και πάνω από δύο δεκαετίες. Συνεργαζόμαστε με ιδιώτες, μηχανικούς
               και ξενοδόχους για να παραδώσουμε ξηρά δόμηση υψηλής ποιότητας — από απλά χωρίσματα
-              μέχρι σύνθετες ψευδοροφές με κρυφό φωτισμό.
+              μέχρι σύνθετες ψευδοροφές με κρυφό φωτισμό, και ό,τι άλλο ζητήσει ο πελάτης.
             </p>
             <ul className="mt-6 space-y-3 text-sm">
               {[
@@ -184,29 +182,26 @@ function HomePage() {
                 Δουλειές που μιλάνε από μόνες τους
               </h2>
             </div>
+            <Button asChild variant="ghost" className="text-primary">
+              <Link to="/projects">Δες όλα τα έργα <ArrowRight className="size-4" /></Link>
+            </Button>
           </div>
 
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
-            {[
-              { src: project1, alt: "Ψευδοροφή γυψοσανίδας με κρυφό φωτισμό LED", caption: "Ψευδοροφή με κρυφό φωτισμό" },
-              { src: project2, alt: "Λευκός τοίχος γυψοσανίδας με ενσωματωμένη ράφια-εσοχή", caption: "Χώρισμα με αρχιτεκτονική εσοχή" },
-              { src: project3, alt: "Εγκατάσταση θερμομόνωσης πετροβάμβακα σε τοίχο", caption: "Θερμο- & ηχομόνωση" },
-            ].map((p) => (
-              <figure key={p.caption} className="group overflow-hidden rounded-xl border border-border bg-card">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+            {projectPhotos.slice(0, 6).map((p, i) => (
+              <div
+                key={i}
+                className="group overflow-hidden rounded-xl border border-border bg-card"
+              >
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
-                    src={p.src}
+                    src={p.url}
                     alt={p.alt}
                     loading="lazy"
-                    width={1200}
-                    height={900}
                     className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
-                <figcaption className="border-t border-border p-4 text-sm font-medium">
-                  {p.caption}
-                </figcaption>
-              </figure>
+              </div>
             ))}
           </div>
         </div>
