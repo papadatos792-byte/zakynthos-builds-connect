@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import { Menu, X, Phone, Clock } from "lucide-react";
 import { business } from "@/lib/business";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo.png.asset.json";
 
 const nav = [
   { to: "/", label: "Αρχική" },
   { to: "/services", label: "Υπηρεσίες" },
+  { to: "/projects", label: "Έργα" },
   { to: "/about", label: "Σχετικά" },
   { to: "/contact", label: "Επικοινωνία" },
 ] as const;
@@ -58,11 +60,11 @@ export function Header() {
         >
           <span
             aria-hidden
-            className="grid size-9 shrink-0 place-items-center rounded-md bg-primary text-primary-foreground font-display font-bold shadow-sm"
+            className="grid size-10 shrink-0 place-items-center rounded-md bg-primary shadow-sm"
           >
-            ΓΖ
+            <img src={logo.url} alt="" className="size-9" width={36} height={36} />
           </span>
-          <span className="font-display text-lg font-semibold leading-tight tracking-tight text-foreground sm:text-xl">
+          <span className="font-display text-base font-semibold leading-tight tracking-tight text-foreground sm:text-lg">
             {business.name}
           </span>
         </Link>
