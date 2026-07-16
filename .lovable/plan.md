@@ -1,75 +1,95 @@
 
 ## Στόχος
-Να στέλνει η φόρμα επικοινωνίας πραγματικά emails στο `lazourasdim@gmail.com` μέσω **Formspree** (δωρεάν plan: 50 submissions/μήνα, χωρίς domain, χωρίς backend setup) και να μπορείς να επιβεβαιώσεις ότι όλα λειτουργούν πριν το deploy.
+Να στέλνει η φόρμα επικοινωνίας πραγματικά emails στο **`ermalshqevi@gmail.com`** (email της επιχείρησης) μέσω **Formspree**, χωρίς να χρειάζεται domain ή backend setup.
 
-## Τι θα αλλάξει στον κώδικα
+## Αλλαγές στον κώδικα
 
-### 1. `src/lib/contact.functions.ts`
-Ο server function που τώρα απλά κάνει `console.log`, θα κάνει `fetch` στο Formspree endpoint:
-- Διαβάζει το `FORMSPREE_ENDPOINT` από `process.env` (secret, όχι στον κώδικα).
-- Στέλνει POST με JSON body: `name`, `email`, `phone`, `area`, `sqm`, `message` + `_subject` (π.χ. «Νέα αίτηση από τη σελίδα»).
-- Αν το Formspree γυρίσει error → throw, ώστε η φόρμα να δείξει το κόκκινο μήνυμα «Κάτι πήγε στραβά».
-- Το honeypot (`website`) παραμένει — αν είναι γεμάτο, επιστρέφει `{ ok: true }` χωρίς αποστολή.
+### 1. `src/lib/business.ts`
+Αλλαγή του `email` από `lazourasdim@gmail.com` σε **`ermalshqevi@gmail.com`**. Αυτόματα ενημερώνονται:
+- Header (κουμπί email)
+- Footer (στοιχεία επικοινωνίας)
+- Σελίδα Επικοινωνίας (info card)
+- SEO schema.org LocalBusiness
 
-### 2. Αποθήκευση του Formspree endpoint ως secret
-Το endpoint URL (`https://formspree.io/f/xxxxxxxx`) είναι μοναδικό για τη φόρμα σου και θα αποθηκευτεί μέσω του Lovable secrets συστήματος (όχι στον κώδικα, όχι σε `.env`).
+### 2. `src/lib/contact.functions.ts`
+Ο server function θα κάνει `fetch` στο Formspree endpoint (ήδη υλοποιημένο σε προηγούμενο turn):
+- Διαβάζει `FORMSPREE_ENDPOINT` από `process.env` (secret).
+- Στέλνει `name, email, phone, area, sqm, message` + `_subject` + `_replyto` = email πελάτη.
+- Σε error → throw, ώστε η φόρμα να δείξει «Κάτι πήγε στραβά».
+- Το honeypot (`website`) παραμένει.
 
-### 3. Καμία άλλη αλλαγή
-- Το `ContactForm.tsx` δεν αλλάζει (ήδη χειρίζεται loading/success/error states).
-- Καμία άλλη σελίδα δεν επηρεάζεται.
+### 3. Αποθήκευση `FORMSPREE_ENDPOINT` ως secret
+Μέσω της ασφαλούς φόρμας του Lovable (όχι στον κώδικα).
 
-## Τι πρέπει να κάνεις εσύ (πριν την υλοποίηση)
+## Τι πρέπει να κάνεις εσύ
 
-1. Πήγαινε στο **https://formspree.io** και κάνε εγγραφή με το `lazourasdim@gmail.com`.
-2. Επιβεβαίωσε το email σου (Formspree σου στέλνει link).
-3. Πάτα **New Form** → όνομα π.χ. «Γυψοτεχνική Ζακύνθου» → email παραλαβής: `lazourasdim@gmail.com`.
-4. Θα σου δώσει ένα endpoint της μορφής `https://formspree.io/f/abcd1234` — αντέγραψέ το.
-5. Πες μου «έτοιμο» και θα σου ανοίξω τη φόρμα ασφαλούς εισαγωγής για να παστάρεις το endpoint.
+### Α. Δημιουργία Formspree form (5 λεπτά)
+1. Πήγαινε στο **https://formspree.io/register** και κάνε εγγραφή.
+2. Επιβεβαίωσε το email σου.
+3. Dashboard → **+ New Form**
+   - Name: `Γυψοτεχνική Ζακύνθου`
+   - Send emails to: **`ermalshqevi@gmail.com`** ← το email του πελάτη
+4. Αντέγραψε το endpoint (`https://formspree.io/f/xxxxxxxx`) και πες μου «έτοιμο».
+5. Θα σου ανοίξω τη φόρμα ασφαλούς εισαγωγής για να το παστάρεις.
 
-## Πώς θα ελέγξεις ότι το email φτάνει (αναλυτικά)
+**Σημαντικό**: Το Formspree θα στείλει email επιβεβαίωσης στο `ermalshqevi@gmail.com` — ο ιδιοκτήτης πρέπει να πατήσει το link «Confirm» πριν αρχίσουν να έρχονται τα mails.
 
-Μετά την υλοποίηση:
+## Πώς θα ελέγξεις ότι το email φτάνει
 
-### Α. Δοκιμή στο preview (πριν το deploy)
-1. Άνοιξε το preview URL → πάνω δεξιά μενού → **Επικοινωνία**.
-2. Συμπλήρωσε τη φόρμα με πραγματικά στοιχεία:
-   - Όνομα: `Δοκιμή Preview`
-   - Τηλέφωνο: το κινητό σου
-   - Email: `lazourasdim@gmail.com` (ή δεύτερο δικό σου)
-   - Μήνυμα: «Δοκιμαστικό μήνυμα από preview — [ημερομηνία/ώρα]»
-3. Πάτα **Αποστολή Μηνύματος**.
-4. **Αναμενόμενα σημάδια επιτυχίας στο UI**:
-   - Το κουμπί γίνεται «Αποστολή...» για 1-2 δευτερόλεπτα.
-   - Η φόρμα αντικαθίσταται από πράσινο check «Ευχαριστούμε! Λάβαμε το μήνυμά σου».
-5. **Έλεγχος inbox**:
-   - Άνοιξε το `lazourasdim@gmail.com` → θα έρθει σε **≤1 λεπτό**.
-   - Αποστολέας: `noreply@formspree.io` (ή `no-reply@formspree.io`).
-   - Θέμα: αυτό που όρισα (π.χ. «Νέα αίτηση από τη σελίδα»).
-   - **Πρώτο email**: Το Formspree ζητά επιβεβαίωση για το πρώτο submission — κάνε κλικ στο link «Confirm» που θα δεις μέσα. Μετά από αυτό, όλα τα επόμενα emails έρχονται απευθείας.
-   - **Δες και τον φάκελο Spam / Ανεπιθύμητα** — αν είναι εκεί, πάτα «Not spam» για να μαθαίνει το Gmail.
-6. **Αν δεν έρθει email σε 5 λεπτά**:
-   - Πάτα το κουμπί «Έλεγχος console» παρακάτω και στείλε μου screenshot / αντιγραφή τυχόν errors — θα δω αν το Formspree γύρισε 401/403/422.
-   - Μπες στο dashboard του Formspree → **Submissions** → πρέπει να βλέπεις εκεί το submission. Αν είναι εκεί αλλά δεν ήρθε mail, το πρόβλημα είναι στο Gmail (spam filter).
+### 1. Δοκιμή στο preview
+- Άνοιξε το preview → μενού → **Επικοινωνία**
+- Συμπλήρωσε τη φόρμα με πραγματικά στοιχεία (χρησιμοποίησε δικό σου email στο πεδίο «Email»)
+- Πάτα **Αποστολή Μηνύματος**
+- ✅ Επιτυχία: κουμπί «Αποστολή...» → πράσινο «Ευχαριστούμε!»
+- ❌ Αποτυχία: κόκκινο μήνυμα «Κάτι πήγε στραβά»
 
-### Β. Έλεγχος validation (χωρίς αποστολή)
-Δοκίμασε αυτά για να επιβεβαιώσεις ότι δεν στέλνει σκουπίδια:
-- Άδεια φόρμα + submit → πρέπει να δείχνει κόκκινα μηνύματα κάτω από κάθε πεδίο.
-- Email `abc` (χωρίς `@`) → «Δώσε ένα έγκυρο email».
-- Τηλέφωνο `abc` → «Δώσε ένα έγκυρο τηλέφωνο».
-- Μήνυμα με λιγότερους από 10 χαρακτήρες → «Γράψε λίγα λόγια».
+### 2. Έλεγχος inbox στο `ermalshqevi@gmail.com`
+- Το email φτάνει σε **≤1 λεπτό**
+- Αποστολέας: `noreply@formspree.io`
+- Θέμα: «Νέα αίτηση από τη σελίδα — [Όνομα]»
+- **Έλεγξε και τον φάκελο Spam** — αν είναι εκεί, «Not spam»
+- Πρώτο mail: πάτα το «Confirm» link του Formspree
 
-### Γ. Δοκιμή σε κινητό
-Άνοιξε το preview URL στο κινητό σου, στείλε άλλη μια δοκιμαστική → επιβεβαίωσε ότι:
-- Η φόρμα φαίνεται σωστά (responsive).
-- Το κουμπί τηλεφώνου στο header ανοίγει την εφαρμογή κλήσης.
+### 3. Αν δεν έρθει σε 5 λεπτά
+- Formspree dashboard → **Submissions**: αν φαίνεται εκεί, το πρόβλημα είναι στο Gmail (spam)
+- Αν δεν φαίνεται, στείλε μου screenshot από το console — θα δω αν επέστρεψε 401/422
 
-### Δ. Μετά το deploy (published URL)
-Επανάλαβε τα Α + Γ στο τελικό `.lovable.app` URL για να επιβεβαιώσεις ότι δουλεύει και εκεί (τα secrets μεταφέρονται αυτόματα).
+### 4. Validation (χωρίς αποστολή)
+- Άδεια φόρμα + submit → κόκκινα μηνύματα κάτω από κάθε πεδίο
+- Email `abc` → «Δώσε ένα έγκυρο email»
+- Μήνυμα <10 χαρακτήρες → «Γράψε λίγα λόγια»
 
-## Τι δεν καλύπτει το Formspree free plan
-- **50 submissions/μήνα** — αρκετά για local business, αλλά αν ξεπεραστούν, τα επόμενα μπλοκάρονται μέχρι επόμενο μήνα.
-- Δεν έχει auto-reply στον πελάτη (μπορεί να προστεθεί με paid plan ή custom λογική αργότερα).
-- Το «reply-to» θα ρυθμιστεί στο email του πελάτη, οπότε όταν πατάς «Απάντηση» στο Gmail σου, πάει απευθείας σε αυτόν.
+### 5. Δοκιμή σε κινητό
+- Άνοιξε το preview URL στο κινητό
+- Επιβεβαίωσε ότι η φόρμα είναι responsive
+- Το κουμπί τηλεφώνου στο header ανοίγει την εφαρμογή κλήσης
 
-## Επόμενο βήμα
-Δημιούργησε τον λογαριασμό Formspree και πες μου όταν έχεις το endpoint URL έτοιμο.
+### 6. Μετά το deploy
+- Επανάλαβε τα βήματα 1-2 στο τελικό `.lovable.app` URL
+
+## Σύνδεση με GitHub (μετά την ολοκλήρωση)
+
+Ναι, το Lovable υποστηρίζει two-way sync με GitHub. Βήματα:
+
+1. Στο Lovable editor, πάτα το **+ (Plus)** κάτω αριστερά στο chat input
+2. **GitHub** → **Connect project**
+3. Εξουσιοδότησε το Lovable GitHub App
+4. Επίλεξε GitHub account/organization
+5. **Create Repository** → δημιουργείται νέο repo με όλο τον κώδικα
+
+Από εκεί και μετά:
+- Αλλαγές στο Lovable → αυτόματο push στο GitHub
+- Αλλαγές στο GitHub → αυτόματο sync στο Lovable
+- Μπορείς να κάνεις `git clone` το repo και να δουλέψεις τοπικά
+
+**Περιορισμοί**: Ένας GitHub λογαριασμός ανά Lovable account. Δεν γίνεται import υπάρχοντος repo — μόνο export.
+
+## Formspree free plan περιορισμοί
+- **50 submissions/μήνα** (αρκετά για local business)
+- Δεν έχει auto-reply στον πελάτη
+- Το «reply-to» είναι το email του πελάτη → πατάς «Απάντηση» στο Gmail και πάει σε αυτόν
+
+## Επόμενα βήματα
+1. Θα αλλάξω το business email σε `ermalshqevi@gmail.com`
+2. Δημιούργησε τον λογαριασμό Formspree με email παραλαβής `ermalshqevi@gmail.com`
+3. Στείλε μου το endpoint URL
