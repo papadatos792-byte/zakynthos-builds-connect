@@ -5,7 +5,7 @@ export const business = {
   tagline: "Γυψοσανίδες & Οικοδομικές Εργασίες στη Ζάκυνθο",
   phone: "+30 697 399 3719",
   phoneHref: "tel:+306973993719",
-  email: "lazourasdim@gmail.com",
+  email: "ermalshqevi@gmail.com",
   region: "Ζάκυνθος",
   availability: "Ελεύθερο ωράριο — κατόπιν συνεννόησης",
   availabilityShort: "Ελεύθερο ωράριο",
