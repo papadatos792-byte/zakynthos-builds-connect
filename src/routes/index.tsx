@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ShieldCheck, Clock3, Award, Sparkles, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { services } from "@/lib/services-data";
+import { useServices } from "@/lib/services-data";
 import { business } from "@/lib/business";
 import { projectPhotos } from "@/lib/projects-data";
+import { useT } from "@/lib/i18n";
 import heroImg from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/")({
@@ -27,6 +28,8 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
+  const { t } = useT();
+  const services = useServices();
   return (
     <>
       {/* Hero */}
@@ -34,7 +37,7 @@ function HomePage() {
         <div className="absolute inset-0">
           <img
             src={heroImg}
-            alt="Επαγγελματίας τεχνίτης εγκαθιστά γυψοσανίδα σε τοίχο"
+            alt={t.projects.imgAlt}
             className="size-full object-cover opacity-25"
             width={1600}
             height={1100}
@@ -44,26 +47,18 @@ function HomePage() {
 
         <div className="container-x relative py-16 md:py-28">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="eyebrow justify-center">
-              <span className="sr-only">κατηγορία:</span>
-              Ζάκυνθος · Ιόνιο
-
-            </span>
+            <span className="eyebrow justify-center">{t.home.heroRegion}</span>
             <h1 className="mt-4 font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
-              Γυψοσανίδες, ψευδοροφές &amp; οικοδομικές{" "}
-              <span className="text-accent">στη Ζάκυνθο</span>
+              {t.home.heroTitleA} <span className="text-accent">{t.home.heroTitleB}</span>
             </h1>
             <p className="mt-5 mx-auto max-w-2xl text-base leading-relaxed text-primary-foreground/85 sm:text-lg">
-
-              {business.yearsExperience}+ χρόνια εμπειρίας σε κατοικίες, ξενοδοχεία και
-              επαγγελματικούς χώρους. Καθαρή εγκατάσταση, σεβασμός στον χρόνο σου, εγγύηση
-              αποτελέσματος.
+              {business.yearsExperience}+ {t.home.heroSubtitle}
             </p>
 
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Button asChild variant="brand" size="lg" className="h-12 px-6 text-base">
                 <Link to="/contact">
-                  Ζήτα Προσφορά Τώρα <ArrowRight className="size-4" />
+                  {t.home.heroCta} <ArrowRight className="size-4" />
                 </Link>
               </Button>
               <Button
@@ -79,36 +74,29 @@ function HomePage() {
             </div>
 
             <dl className="mt-12 mx-auto grid max-w-lg grid-cols-3 gap-6 border-t border-primary-foreground/15 pt-6">
-              <Stat value={`${business.yearsExperience}+`} label="Χρόνια εμπειρίας" />
-              <Stat value={`${business.projectsCompleted}+`} label="Έργα παντού" />
-              <Stat value="100%" label="Εγγύηση εργασίας" />
+              <Stat value={`${business.yearsExperience}+`} label={t.home.statYears} />
+              <Stat value={`${business.projectsCompleted}+`} label={t.home.statProjects} />
+              <Stat value={t.home.guaranteeValue} label={t.home.statGuarantee} />
             </dl>
           </div>
         </div>
-
       </section>
 
       {/* Intro */}
       <section className="section-y">
         <div className="container-x grid gap-10 lg:grid-cols-12 lg:items-center">
           <div className="lg:col-span-6">
-            <span className="eyebrow">Ποιοι είμαστε</span>
+            <span className="eyebrow">{t.home.introEyebrow}</span>
             <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">
-              Τοπική επιχείρηση, εξειδικευμένη στη γυψοσανίδα
+              {t.home.introTitle}
             </h2>
             <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-              Η <strong className="text-foreground">{business.name}</strong> δραστηριοποιείται
-              στη Ζάκυνθο εδώ και πάνω από δύο δεκαετίες. Συνεργαζόμαστε με ιδιώτες, μηχανικούς
-              και ξενοδόχους για να παραδώσουμε ξηρά δόμηση υψηλής ποιότητας — από απλά χωρίσματα
-              μέχρι σύνθετες ψευδοροφές με κρυφό φωτισμό, και ό,τι άλλο ζητήσει ο πελάτης.
+              {t.home.introBodyBefore}
+              <strong className="text-foreground">{business.name}</strong>
+              {t.home.introBodyAfter}
             </p>
             <ul className="mt-6 space-y-3 text-sm">
-              {[
-                "Πιστοποιημένα υλικά (Knauf, Rigips)",
-                "Ρεαλιστική προσφορά χωρίς εκπλήξεις",
-                "Καθαρός χώρος εργασίας κάθε μέρα",
-                "Εξυπηρέτηση σε όλο το νησί",
-              ].map((item) => (
+              {t.home.introBullets.map((item) => (
                 <li key={item} className="flex items-start gap-3">
                   <span className="mt-1 grid size-5 shrink-0 place-items-center rounded-full bg-accent/15 text-accent">
                     <Sparkles className="size-3" aria-hidden />
@@ -119,17 +107,17 @@ function HomePage() {
             </ul>
             <div className="mt-8">
               <Button asChild variant="outline">
-                <Link to="/about">Μάθε περισσότερα για εμάς <ArrowRight className="size-4" /></Link>
+                <Link to="/about">{t.home.introMore} <ArrowRight className="size-4" /></Link>
               </Button>
             </div>
           </div>
 
           <div className="lg:col-span-6">
             <div className="grid grid-cols-2 gap-4">
-              <Feature icon={<ShieldCheck className="size-5" />} title="Εγγύηση αποτελέσματος" body="Στέκουμε πίσω από κάθε έργο μας." />
-              <Feature icon={<Clock3 className="size-5" />} title="Στον χρόνο" body="Παράδοση με σεβασμό στο πρόγραμμά σου." />
-              <Feature icon={<Award className="size-5" />} title="Ποιότητα υλικών" body="Επιλεγμένοι κατασκευαστές, πιστοποιημένα υλικά." />
-              <Feature icon={<Sparkles className="size-5" />} title="Καθαρή δουλειά" body="Προστασία επίπλων & καθαρισμός χώρου." />
+              <Feature icon={<ShieldCheck className="size-5" />} title={t.home.features[0].title} body={t.home.features[0].body} />
+              <Feature icon={<Clock3 className="size-5" />} title={t.home.features[1].title} body={t.home.features[1].body} />
+              <Feature icon={<Award className="size-5" />} title={t.home.features[2].title} body={t.home.features[2].body} />
+              <Feature icon={<Sparkles className="size-5" />} title={t.home.features[3].title} body={t.home.features[3].body} />
             </div>
           </div>
         </div>
@@ -140,13 +128,13 @@ function HomePage() {
         <div className="container-x">
           <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
             <div className="max-w-2xl">
-              <span className="eyebrow">Οι Υπηρεσίες μας</span>
+              <span className="eyebrow">{t.home.servicesEyebrow}</span>
               <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">
-                Λύσεις για κάθε ανάγκη ξηράς δόμησης
+                {t.home.servicesTitle}
               </h2>
             </div>
             <Button asChild variant="ghost" className="text-primary">
-              <Link to="/services">Όλες οι υπηρεσίες <ArrowRight className="size-4" /></Link>
+              <Link to="/services">{t.home.servicesAll} <ArrowRight className="size-4" /></Link>
             </Button>
           </div>
 
@@ -164,7 +152,7 @@ function HomePage() {
                 <h3 className="mt-4 font-display text-lg font-semibold">{s.title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{s.short}</p>
                 <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary group-hover:text-accent">
-                  Δες περισσότερα <ArrowRight className="size-3.5" />
+                  {t.home.servicesMore} <ArrowRight className="size-3.5" />
                 </span>
               </Link>
             ))}
@@ -177,26 +165,23 @@ function HomePage() {
         <div className="container-x">
           <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
             <div className="max-w-2xl">
-              <span className="eyebrow">Πρόσφατα Έργα</span>
+              <span className="eyebrow">{t.home.projectsEyebrow}</span>
               <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">
-                Δουλειές που μιλάνε από μόνες τους
+                {t.home.projectsTitle}
               </h2>
             </div>
             <Button asChild variant="ghost" className="text-primary">
-              <Link to="/projects">Δες όλα τα έργα <ArrowRight className="size-4" /></Link>
+              <Link to="/projects">{t.home.projectsAll} <ArrowRight className="size-4" /></Link>
             </Button>
           </div>
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
             {projectPhotos.slice(0, 6).map((p, i) => (
-              <div
-                key={i}
-                className="group overflow-hidden rounded-xl border border-border bg-card"
-              >
+              <div key={i} className="group overflow-hidden rounded-xl border border-border bg-card">
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
                     src={p.url}
-                    alt={p.alt}
+                    alt={t.projects.imgAlt}
                     loading="lazy"
                     className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
@@ -211,23 +196,17 @@ function HomePage() {
       <section className="pb-20">
         <div className="container-x">
           <div className="relative overflow-hidden rounded-2xl bg-primary p-8 text-primary-foreground shadow-elegant md:p-14">
-            <div
-              className="absolute -right-16 -top-16 size-64 rounded-full bg-accent/20 blur-3xl"
-              aria-hidden
-            />
+            <div className="absolute -right-16 -top-16 size-64 rounded-full bg-accent/20 blur-3xl" aria-hidden />
             <div className="relative grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
               <div>
                 <h2 className="font-display text-3xl font-semibold sm:text-4xl">
-                  Έτοιμος για να ξεκινήσουμε;
+                  {t.home.ctaTitle}
                 </h2>
-                <p className="mt-3 max-w-xl text-primary-foreground/85">
-                  Πες μας δυο λόγια για το έργο σου. Θα επικοινωνήσουμε άμεσα με μια ξεκάθαρη
-                  πρόταση.
-                </p>
+                <p className="mt-3 max-w-xl text-primary-foreground/85">{t.home.ctaBody}</p>
               </div>
               <div className="flex flex-wrap gap-3">
                 <Button asChild variant="brand" size="lg" className="h-12 px-6">
-                  <Link to="/contact">Ζήτα Προσφορά <ArrowRight className="size-4" /></Link>
+                  <Link to="/contact">{t.home.ctaBtn} <ArrowRight className="size-4" /></Link>
                 </Button>
                 <Button
                   asChild
@@ -235,7 +214,7 @@ function HomePage() {
                   size="lg"
                   className="h-12 border-primary-foreground/30 bg-transparent px-6 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
                 >
-                  <a href={business.phoneHref}><Phone className="size-4" /> Κάλεσέ μας</a>
+                  <a href={business.phoneHref}><Phone className="size-4" /> {t.home.ctaCall}</a>
                 </Button>
               </div>
             </div>
