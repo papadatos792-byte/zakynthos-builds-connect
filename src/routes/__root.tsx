@@ -16,21 +16,21 @@ import { Footer } from "@/components/site/Footer";
 import { CookieConsent } from "@/components/site/CookieConsent";
 import { Toaster } from "@/components/ui/sonner";
 import { business } from "@/lib/business";
+import { LanguageProvider, useT } from "@/lib/i18n";
 
 function NotFoundComponent() {
+  const { t } = useT();
   return (
     <div className="flex min-h-[60vh] items-center justify-center px-4 py-20">
       <div className="max-w-md text-center">
-        <p className="font-display text-sm font-semibold uppercase tracking-widest text-accent">404</p>
-        <h1 className="mt-3 font-display text-3xl font-semibold">Η σελίδα δεν βρέθηκε</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Η σελίδα που αναζητάς δεν υπάρχει ή έχει μετακινηθεί.
-        </p>
+        <p className="font-display text-sm font-semibold uppercase tracking-widest text-accent">{t.notFound.code}</p>
+        <h1 className="mt-3 font-display text-3xl font-semibold">{t.notFound.title}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{t.notFound.body}</p>
         <Link
           to="/"
           className="mt-6 inline-flex items-center justify-center rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
         >
-          Επιστροφή στην Αρχική
+          {t.notFound.back}
         </Link>
       </div>
     </div>
@@ -40,6 +40,7 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
+  const { t } = useT();
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
@@ -47,10 +48,8 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-[60vh] items-center justify-center px-4 py-20">
       <div className="max-w-md text-center">
-        <h1 className="font-display text-xl font-semibold">Κάτι δεν πήγε καλά</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Δοκίμασε ξανά ή επίστρεψε στην αρχική σελίδα.
-        </p>
+        <h1 className="font-display text-xl font-semibold">{t.error.title}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{t.error.body}</p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => {
@@ -59,13 +58,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
             }}
             className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
           >
-            Δοκίμασε ξανά
+            {t.error.retry}
           </button>
           <a
             href="/"
             className="rounded-md border border-input px-4 py-2 text-sm font-medium hover:bg-secondary"
           >
-            Αρχική
+            {t.error.home}
           </a>
         </div>
       </div>
@@ -90,6 +89,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: business.name },
       { property: "og:locale", content: "el_GR" },
+      { property: "og:locale:alternate", content: "en_US" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
@@ -138,16 +138,15 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
-function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
-
+function AppShell() {
+  const { t } = useT();
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground"
       >
-        Παράλειψη στο περιεχόμενο
+        {t.header.skip}
       </a>
       <div className="flex min-h-dvh flex-col">
         <Header />
@@ -158,6 +157,18 @@ function RootComponent() {
       </div>
       <CookieConsent />
       <Toaster />
+    </>
+  );
+}
+
+function RootComponent() {
+  const { queryClient } = Route.useRouteContext();
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <LanguageProvider>
+        <AppShell />
+      </LanguageProvider>
     </QueryClientProvider>
   );
 }

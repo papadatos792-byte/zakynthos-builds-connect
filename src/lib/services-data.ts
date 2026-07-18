@@ -1,118 +1,34 @@
 import { Layers, PanelTop, Lightbulb, Droplets, Volume2, Snowflake, Hammer, Wrench } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { useT } from "@/lib/i18n";
+
+export type ServiceMeta = { slug: string; icon: LucideIcon };
+
+// Ordering + icons for services. Text content lives in i18n (translations.serviceItems).
+export const serviceMeta: ServiceMeta[] = [
+  { slug: "gypsosanides-toichon", icon: Layers },
+  { slug: "psevdorofes", icon: PanelTop },
+  { slug: "kryfos-fotismos", icon: Lightbulb },
+  { slug: "anthygres", icon: Droplets },
+  { slug: "ichomonosi", icon: Volume2 },
+  { slug: "monosi", icon: Snowflake },
+  { slug: "oikodomikes", icon: Hammer },
+  { slug: "epikseyaseis", icon: Wrench },
+];
 
 export type Service = {
   slug: string;
   title: string;
   short: string;
   description: string;
-  benefits: string[];
+  benefits: readonly string[];
   icon: LucideIcon;
 };
 
-export const services: Service[] = [
-  {
-    slug: "gypsosanides-toichon",
-    title: "Γυψοσανίδες Τοίχων",
-    short: "Χωρίσματα και επενδύσεις τοίχων με πιστοποιημένα υλικά.",
-    description:
-      "Κατασκευάζουμε ελαφριά χωρίσματα και επενδύσεις τοίχων με μεταλλικό σκελετό και γυψοσανίδα. Ιδανικά για ανακαινίσεις κατοικιών, ξενοδοχείων και επαγγελματικών χώρων στη Ζάκυνθο.",
-    benefits: [
-      "Ταχύτητα κατασκευής — έργα σε λίγες ημέρες",
-      "Καθαρή εγκατάσταση χωρίς μπάζα",
-      "Άριστο φινίρισμα, έτοιμο για βαφή",
-    ],
-    icon: Layers,
-  },
-  {
-    slug: "psevdorofes",
-    title: "Ψευδοροφές",
-    short: "Επίπεδες ή σχεδιαστικές ψευδοροφές με κρυφό φωτισμό.",
-    description:
-      "Σχεδιάζουμε και τοποθετούμε ψευδοροφές γυψοσανίδας — επίπεδες, βαθμιδωτές ή με ενσωματωμένα φωτιστικά σώματα. Ιδανικές για κάλυψη εγκαταστάσεων και βελτίωση αισθητικής.",
-    benefits: [
-      "Απόκρυψη καλωδίων & αεραγωγών",
-      "Δυνατότητα ενσωμάτωσης spot και LED",
-      "Θερμική & ακουστική βελτίωση",
-    ],
-    icon: PanelTop,
-  },
-  {
-    slug: "kryfos-fotismos",
-    title: "Κρυφός Φωτισμός",
-    short: "Σχεδιασμός και εγκατάσταση κρυφού φωτισμού LED.",
-    description:
-      "Δημιουργούμε ατμοσφαιρικές λύσεις φωτισμού με ταινίες LED σε κοιλότητες γυψοσανίδας. Μελετάμε τη διάχυση, τη θερμοκρασία χρώματος και τη σκίαση για το τέλειο αποτέλεσμα.",
-    benefits: [
-      "Ζεστή, διάχυτη ατμόσφαιρα",
-      "Χαμηλή κατανάλωση ενέργειας",
-      "Μεγάλη διάρκεια ζωής υλικών",
-    ],
-    icon: Lightbulb,
-  },
-  {
-    slug: "anthygres",
-    title: "Ανθυγρές Γυψοσανίδες",
-    short: "Ειδικές γυψοσανίδες για μπάνια, κουζίνες, υγρούς χώρους.",
-    description:
-      "Χρησιμοποιούμε πράσινες ανθυγρές πλάκες κατάλληλες για χώρους με υψηλή υγρασία. Απαραίτητες για τα ξενοδοχειακά μπάνια και τις κουζίνες.",
-    benefits: [
-      "Αντοχή στην υγρασία και στους ατμούς",
-      "Αποφυγή μούχλας και φθορών",
-      "Συμβατές με πλακάκια και βαφές",
-    ],
-    icon: Droplets,
-  },
-  {
-    slug: "ichomonosi",
-    title: "Ηχομόνωση",
-    short: "Ακουστική μόνωση διαχωριστικών και ορόφων.",
-    description:
-      "Σχεδιάζουμε συστήματα ηχομόνωσης με πετροβάμβακα και ειδικές διπλές γυψοσανίδες, ιδανικά για δωμάτια ξενοδοχείων, γραφεία και διαμερίσματα.",
-    benefits: [
-      "Μείωση θορύβου έως και 55 dB",
-      "Ιδανικό για ξενοδοχεία & πολυκατοικίες",
-      "Λεπτή κατασκευή, χωρίς απώλεια χώρου",
-    ],
-    icon: Volume2,
-  },
-  {
-    slug: "monosi",
-    title: "Θερμομόνωση",
-    short: "Εσωτερική θερμομόνωση για εξοικονόμηση ενέργειας.",
-    description:
-      "Εφαρμόζουμε λύσεις εσωτερικής θερμομόνωσης με πετροβάμβακα ή EPS πίσω από γυψοσανίδα, για αισθητή μείωση κατανάλωσης θέρμανσης & ψύξης.",
-    benefits: [
-      "Μείωση λογαριασμών ενέργειας",
-      "Άνεση όλο τον χρόνο",
-      "Αναβάθμιση ενεργειακής κλάσης",
-    ],
-    icon: Snowflake,
-  },
-  {
-    slug: "oikodomikes",
-    title: "Οικοδομικές Εργασίες",
-    short: "Σοβατεπί, στοκαρίσματα, μερεμέτια, γενικές ανακαινίσεις.",
-    description:
-      "Αναλαμβάνουμε συνοδευτικές οικοδομικές εργασίες: στοκαρίσματα, τρίψιμο, προετοιμασία τοίχων, μικρές οικοδομικές αποκαταστάσεις.",
-    benefits: [
-      "Ένας συνεργάτης για όλο το έργο",
-      "Συντονισμός συνεργείων",
-      "Αξιόπιστη παράδοση στον χρόνο",
-    ],
-    icon: Hammer,
-  },
-  {
-    slug: "epikseyaseis",
-    title: "Επισκευές & Συντηρήσεις",
-    short: "Αποκατάσταση φθορών σε γυψοσανίδες και ψευδοροφές.",
-    description:
-      "Επισκευάζουμε ρωγμές, τρύπες και φθορές από υγρασία σε υπάρχουσες κατασκευές, με άμεση εξυπηρέτηση σε όλο το νησί.",
-    benefits: [
-      "Άμεση εξυπηρέτηση",
-      "Καθαρή εργασία σε κατοικημένους χώρους",
-      "Εγγύηση αποτελέσματος",
-    ],
-    icon: Wrench,
-  },
-];
+export function useServices(): Service[] {
+  const { t } = useT();
+  return serviceMeta.map((m) => {
+    const data = t.serviceItems[m.slug as keyof typeof t.serviceItems];
+    return { slug: m.slug, icon: m.icon, ...data };
+  });
+}
