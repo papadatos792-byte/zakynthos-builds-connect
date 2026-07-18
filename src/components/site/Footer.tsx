@@ -3,7 +3,6 @@ import { Phone, Mail, Clock } from "lucide-react";
 import { business } from "@/lib/business";
 import { useServices } from "@/lib/services-data";
 import { useT } from "@/lib/i18n";
-import logo from "@/assets/logo.png.asset.json";
 
 export function Footer() {
   const { t } = useT();
@@ -15,7 +14,7 @@ export function Footer() {
         <div className="md:col-span-1">
           <Link to="/" className="flex items-center gap-2.5">
             <img
-              src={logo.url}
+              src="/images/logo.png"
               alt={business.name}
               className="size-10 shrink-0"
               width={40}
