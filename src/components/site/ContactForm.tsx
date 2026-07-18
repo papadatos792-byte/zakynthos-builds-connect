@@ -6,23 +6,25 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useT } from "@/lib/i18n";
 
 type Errors = Partial<Record<"name" | "phone" | "email" | "message", string>>;
 
 export function ContactForm() {
+  const { t } = useT();
   const submit = useServerFn(submitContact);
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
   const [errors, setErrors] = useState<Errors>({});
 
   const validate = (data: Record<string, string>): Errors => {
     const e: Errors = {};
-    if (!data.name || data.name.trim().length < 2) e.name = "Συμπλήρωσε το όνομά σου.";
+    if (!data.name || data.name.trim().length < 2) e.name = t.form.errName;
     if (!data.phone || !/^[0-9+()\-\s]{6,}$/.test(data.phone.trim()))
-      e.phone = "Δώσε ένα έγκυρο τηλέφωνο.";
+      e.phone = t.form.errPhone;
     if (!data.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim()))
-      e.email = "Δώσε ένα έγκυρο email.";
+      e.email = t.form.errEmail;
     if (!data.message || data.message.trim().length < 10)
-      e.message = "Γράψε λίγα λόγια για το έργο σου.";
+      e.message = t.form.errMessage;
     return e;
   };
 
@@ -63,21 +65,18 @@ export function ContactForm() {
         <div className="mx-auto grid size-12 place-items-center rounded-full bg-accent/15 text-accent">
           <CheckCircle2 className="size-6" aria-hidden />
         </div>
-        <h3 className="mt-4 font-display text-xl font-semibold">Ευχαριστούμε!</h3>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Λάβαμε το μήνυμά σου. Θα επικοινωνήσουμε μαζί σου το συντομότερο δυνατό στα στοιχεία
-          που μας έδωσες.
-        </p>
+        <h3 className="mt-4 font-display text-xl font-semibold">{t.form.successTitle}</h3>
+        <p className="mt-2 text-sm text-muted-foreground">{t.form.successBody}</p>
         <Button className="mt-6" variant="outline" onClick={() => setStatus("idle")}>
-          Νέο μήνυμα
+          {t.form.newMessage}
         </Button>
       </div>
     );
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate className="space-y-5" aria-label="Φόρμα επικοινωνίας">
-      {/* Honeypot — κρυφό πεδίο για bots */}
+    <form onSubmit={onSubmit} noValidate className="space-y-5" aria-label={t.form.aria}>
+      {/* Honeypot */}
       <div className="hidden" aria-hidden="true">
         <label>
           Website
@@ -86,20 +85,20 @@ export function ContactForm() {
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Όνομα" name="name" required error={errors.name} autoComplete="name" />
-        <Field label="Τηλέφωνο" name="phone" type="tel" required error={errors.phone} autoComplete="tel" />
+        <Field label={t.form.name} name="name" required error={errors.name} autoComplete="name" />
+        <Field label={t.form.phone} name="phone" type="tel" required error={errors.phone} autoComplete="tel" />
       </div>
 
-      <Field label="Email" name="email" type="email" required error={errors.email} autoComplete="email" />
+      <Field label={t.form.email} name="email" type="email" required error={errors.email} autoComplete="email" />
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Περιοχή" name="area" placeholder="π.χ. Λαγανάς, Ζάκυνθος" />
-        <Field label="Τετραγωνικά (m²)" name="sqm" placeholder="π.χ. 80" inputMode="numeric" />
+        <Field label={t.form.area} name="area" placeholder={t.form.areaPh} />
+        <Field label={t.form.sqm} name="sqm" placeholder={t.form.sqmPh} inputMode="numeric" />
       </div>
 
       <div>
         <Label htmlFor="message">
-          Μήνυμα <span className="text-accent">*</span>
+          {t.form.message} <span className="text-accent">*</span>
         </Label>
         <Textarea
           id="message"
@@ -108,7 +107,7 @@ export function ContactForm() {
           required
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? "message-error" : undefined}
-          placeholder="Πες μας για το έργο σου: τύπος χώρου, τι θα ήθελες, ενδεικτικά τετραγωνικά…"
+          placeholder={t.form.messagePh}
           className="mt-1.5"
         />
         {errors.message && (
@@ -118,14 +117,12 @@ export function ContactForm() {
         )}
       </div>
 
-      <p className="text-xs text-muted-foreground">
-        Πατώντας «Αποστολή» συναινείς στην επικοινωνία μας μαζί σου για την αίτησή σου.
-      </p>
+      <p className="text-xs text-muted-foreground">{t.form.consent}</p>
 
       <div className="flex flex-col-reverse items-stretch gap-3 sm:flex-row sm:items-center">
         {status === "error" && (
           <p className="flex items-center gap-2 text-sm text-destructive" role="alert">
-            <AlertCircle className="size-4" /> Κάτι πήγε στραβά. Δοκίμασε ξανά ή κάλεσέ μας.
+            <AlertCircle className="size-4" /> {t.form.error}
           </p>
         )}
         <Button
@@ -136,7 +133,7 @@ export function ContactForm() {
           className="sm:ml-auto"
         >
           <Send className="size-4" />
-          {status === "sending" ? "Αποστολή..." : "Αποστολή Μηνύματος"}
+          {status === "sending" ? t.form.sending : t.form.submit}
         </Button>
       </div>
     </form>

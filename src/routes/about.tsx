@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ShieldCheck, Award, Heart, Target, Handshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { business } from "@/lib/business";
+import { useT } from "@/lib/i18n";
 import logo from "@/assets/logo.png.asset.json";
 
 export const Route = createFileRoute("/about")({
@@ -10,7 +11,7 @@ export const Route = createFileRoute("/about")({
       { title: `Σχετικά με εμάς — ${business.name}` },
       {
         name: "description",
-        content: `${business.yearsExperience}+ χρόνια εμπειρίας στη γυψοσανίδα και τις οικοδομικές εργασίες στη Ζάκυνθο. Οι αξίες μας και οι πιστοποιήσεις μας.`,
+        content: `${business.yearsExperience}+ χρόνια εμπειρίας στη γυψοσανίδα και τις οικοδομικές εργασίες στη Ζάκυνθο.`,
       },
       { property: "og:title", content: `Σχετικά με εμάς — ${business.name}` },
       { property: "og:description", content: "Οι αξίες και η εμπειρία μας." },
@@ -21,33 +22,23 @@ export const Route = createFileRoute("/about")({
   component: AboutPage,
 });
 
-const values = [
-  { icon: ShieldCheck, title: "Ποιότητα", body: "Πιστοποιημένα υλικά και σωστή τεχνική σε κάθε έργο." },
-  { icon: Handshake, title: "Ειλικρίνεια", body: "Ρεαλιστικές προσφορές, ξεκάθαροι χρόνοι, καμία έκπληξη." },
-  { icon: Target, title: "Συνέπεια", body: "Ό,τι υποσχεθούμε, το παραδίδουμε στον χρόνο του." },
-  { icon: Heart, title: "Σεβασμός", body: "Στο χώρο σου, στα έπιπλά σου και στο πρόγραμμά σου." },
-];
-
-const certs = [
-  "Πιστοποιημένος εφαρμοστής Knauf",
-  "Έγγραφη εγγύηση εργασιών",
-  "Πλήρη τιμολόγηση & νόμιμες αποδείξεις",
-];
+const valueIcons = [ShieldCheck, Handshake, Target, Heart];
 
 export function AboutPage() {
+  const { t } = useT();
   return (
     <>
       <section className="border-b border-border bg-secondary/40 py-14 md:py-20">
         <div className="container-x grid gap-10 lg:grid-cols-12 lg:items-center">
           <div className="lg:col-span-7">
-            <span className="eyebrow">Σχετικά με εμάς</span>
+            <span className="eyebrow">{t.about.heroEyebrow}</span>
             <h1 className="mt-3 font-display text-4xl font-bold sm:text-5xl">
-              {business.yearsExperience}+ χρόνια στη γυψοσανίδα, στη Ζάκυνθο
+              {business.yearsExperience}+ {t.about.heroTitleSuffix}
             </h1>
             <p className="mt-4 text-base text-muted-foreground sm:text-lg">
-              Η {business.name} είναι μια ατομική επιχείρηση με προσωπική παρουσία σε κάθε έργο.
-              Από τη μελέτη μέχρι το φινίρισμα, θα έχεις έναν άνθρωπο απέναντί σου — υπεύθυνο,
-              συνεπή και με γνώση της δουλειάς, και ό,τι άλλο ζητήσει ο πελάτης.
+              {t.about.heroBodyBefore}
+              {business.name}
+              {t.about.heroBodyAfter}
             </p>
           </div>
           <div className="lg:col-span-5">
@@ -68,20 +59,23 @@ export function AboutPage() {
       {/* Values */}
       <section className="section-y bg-secondary/40">
         <div className="container-x">
-          <span className="eyebrow">Οι αξίες μας</span>
+          <span className="eyebrow">{t.about.valuesEyebrow}</span>
           <h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">
-            Πώς δουλεύουμε
+            {t.about.valuesTitle}
           </h2>
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((v) => (
-              <div key={v.title} className="rounded-xl border border-border bg-card p-6 shadow-card">
-                <span className="grid size-11 place-items-center rounded-md bg-primary text-primary-foreground">
-                  <v.icon className="size-5" aria-hidden />
-                </span>
-                <h3 className="mt-4 font-display text-lg font-semibold">{v.title}</h3>
-                <p className="mt-1.5 text-sm text-muted-foreground">{v.body}</p>
-              </div>
-            ))}
+            {t.about.values.map((v, idx) => {
+              const Icon = valueIcons[idx];
+              return (
+                <div key={v.title} className="rounded-xl border border-border bg-card p-6 shadow-card">
+                  <span className="grid size-11 place-items-center rounded-md bg-primary text-primary-foreground">
+                    <Icon className="size-5" aria-hidden />
+                  </span>
+                  <h3 className="mt-4 font-display text-lg font-semibold">{v.title}</h3>
+                  <p className="mt-1.5 text-sm text-muted-foreground">{v.body}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -89,12 +83,12 @@ export function AboutPage() {
       {/* Certs */}
       <section className="section-y">
         <div className="container-x max-w-3xl">
-          <span className="eyebrow">Πιστοποιήσεις</span>
+          <span className="eyebrow">{t.about.certsEyebrow}</span>
           <h2 className="mt-3 font-display text-3xl font-semibold">
-            Εγγύηση σοβαρότητας
+            {t.about.certsTitle}
           </h2>
           <ul className="mt-6 space-y-3">
-            {certs.map((c) => (
+            {t.about.certs.map((c) => (
               <li key={c} className="flex items-start gap-3 rounded-lg border border-border bg-card px-4 py-3">
                 <Award className="mt-0.5 size-5 shrink-0 text-accent" aria-hidden />
                 <span>{c}</span>
@@ -109,10 +103,10 @@ export function AboutPage() {
           <div className="rounded-2xl bg-primary p-8 text-primary-foreground md:p-12">
             <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
               <h2 className="font-display text-2xl font-semibold sm:text-3xl">
-                Δούλεψε με έναν άνθρωπο που εμπιστεύεσαι.
+                {t.about.ctaTitle}
               </h2>
               <Button asChild variant="brand" size="lg" className="h-12 px-6">
-                <Link to="/contact">Επικοινώνησε μαζί μας</Link>
+                <Link to="/contact">{t.about.ctaBtn}</Link>
               </Button>
             </div>
           </div>

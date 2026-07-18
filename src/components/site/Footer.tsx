@@ -1,10 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { Phone, Mail, Clock } from "lucide-react";
 import { business } from "@/lib/business";
-import { services } from "@/lib/services-data";
+import { useServices } from "@/lib/services-data";
+import { useT } from "@/lib/i18n";
 import logo from "@/assets/logo.png.asset.json";
 
 export function Footer() {
+  const { t } = useT();
+  const services = useServices();
   const year = new Date().getFullYear();
   return (
     <footer className="mt-16 bg-primary text-primary-foreground">
@@ -21,26 +24,26 @@ export function Footer() {
             <span className="font-display text-lg font-semibold">{business.name}</span>
           </Link>
           <p className="mt-4 text-sm leading-relaxed text-primary-foreground/75">
-            {business.tagline}. Καθαρή δουλειά, στον χρόνο που συμφωνούμε, με εγγύηση.
+            {t.tagline}. {t.footer.taglineSuffix}
           </p>
         </div>
 
         <div>
           <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-accent">
-            Πλοήγηση
+            {t.footer.navHeading}
           </h3>
           <ul className="mt-4 space-y-2 text-sm">
-            <li><Link to="/" className="text-primary-foreground/80 hover:text-accent">Αρχική</Link></li>
-            <li><Link to="/services" className="text-primary-foreground/80 hover:text-accent">Υπηρεσίες</Link></li>
-            <li><Link to="/projects" className="text-primary-foreground/80 hover:text-accent">Έργα</Link></li>
-            <li><Link to="/about" className="text-primary-foreground/80 hover:text-accent">Σχετικά με εμάς</Link></li>
-            <li><Link to="/contact" className="text-primary-foreground/80 hover:text-accent">Επικοινωνία</Link></li>
+            <li><Link to="/" className="text-primary-foreground/80 hover:text-accent">{t.nav.home}</Link></li>
+            <li><Link to="/services" className="text-primary-foreground/80 hover:text-accent">{t.nav.services}</Link></li>
+            <li><Link to="/projects" className="text-primary-foreground/80 hover:text-accent">{t.nav.projects}</Link></li>
+            <li><Link to="/about" className="text-primary-foreground/80 hover:text-accent">{t.nav.about}</Link></li>
+            <li><Link to="/contact" className="text-primary-foreground/80 hover:text-accent">{t.nav.contact}</Link></li>
           </ul>
         </div>
 
         <div>
           <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-accent">
-            Υπηρεσίες
+            {t.footer.servicesHeading}
           </h3>
           <ul className="mt-4 space-y-2 text-sm">
             {services.map((s) => (
@@ -59,7 +62,7 @@ export function Footer() {
 
         <div>
           <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-accent">
-            Επικοινωνία
+            {t.footer.contactHeading}
           </h3>
           <ul className="mt-4 space-y-3 text-sm">
             <li className="flex items-start gap-3">
@@ -79,7 +82,7 @@ export function Footer() {
             </li>
             <li className="flex items-start gap-3">
               <Clock className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
-              <span className="text-primary-foreground/85">{business.availability}</span>
+              <span className="text-primary-foreground/85">{t.availability}</span>
             </li>
           </ul>
         </div>
@@ -87,8 +90,8 @@ export function Footer() {
 
       <div className="border-t border-primary-foreground/10">
         <div className="container-x flex flex-col items-start justify-between gap-2 py-5 text-xs text-primary-foreground/60 sm:flex-row sm:items-center">
-          <p>© {year} {business.name}. Όλα τα δικαιώματα διατηρούνται.</p>
-          <p>Ζάκυνθος · Ιόνιο</p>
+          <p>© {year} {business.name}. {t.footer.rights}</p>
+          <p>{t.footer.region}</p>
         </div>
       </div>
     </footer>

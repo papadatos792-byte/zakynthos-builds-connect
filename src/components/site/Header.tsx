@@ -3,20 +3,23 @@ import { useEffect, useState } from "react";
 import { Menu, X, Phone, Clock } from "lucide-react";
 import { business } from "@/lib/business";
 import { Button } from "@/components/ui/button";
+import { LanguageSwitcher } from "@/components/site/LanguageSwitcher";
+import { useT } from "@/lib/i18n";
 import logo from "@/assets/logo.png.asset.json";
 
-const nav = [
-  { to: "/", label: "Αρχική" },
-  { to: "/services", label: "Υπηρεσίες" },
-  { to: "/projects", label: "Έργα" },
-  { to: "/about", label: "Σχετικά" },
-  { to: "/contact", label: "Επικοινωνία" },
-] as const;
-
 export function Header() {
+  const { t } = useT();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  const nav = [
+    { to: "/", label: t.nav.home },
+    { to: "/services", label: t.nav.services },
+    { to: "/projects", label: t.nav.projects },
+    { to: "/about", label: t.nav.about },
+    { to: "/contact", label: t.nav.contact },
+  ] as const;
 
   useEffect(() => {
     setOpen(false);
@@ -40,15 +43,19 @@ export function Header() {
         <div className="container-x flex h-9 items-center justify-between text-xs">
           <div className="flex items-center gap-2 opacity-90">
             <Clock className="size-3.5" aria-hidden />
-            <span>{business.availability}</span>
+            <span>{t.availability}</span>
           </div>
-          <a
-            href={business.phoneHref}
-            className="flex items-center gap-2 font-medium hover:text-accent transition-colors"
-          >
-            <Phone className="size-3.5" aria-hidden />
-            <span>{business.phone}</span>
-          </a>
+          <div className="flex items-center gap-3">
+            <a
+              href={business.phoneHref}
+              className="flex items-center gap-2 font-medium hover:text-accent transition-colors"
+            >
+              <Phone className="size-3.5" aria-hidden />
+              <span>{business.phone}</span>
+            </a>
+            <span aria-hidden className="h-4 w-px bg-primary-foreground/25" />
+            <LanguageSwitcher className="hover:bg-primary-foreground/10" />
+          </div>
         </div>
       </div>
 
@@ -56,7 +63,7 @@ export function Header() {
         <Link
           to="/"
           className="flex items-center gap-2.5"
-          aria-label={`${business.name} — Αρχική`}
+          aria-label={`${business.name} — ${t.nav.home}`}
         >
           <span
             aria-hidden
@@ -69,7 +76,7 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Κύρια πλοήγηση">
+        <nav className="hidden items-center gap-1 md:flex" aria-label={t.header.mainNav}>
           {nav.map((item) => (
             <Link
               key={item.to}
@@ -85,24 +92,27 @@ export function Header() {
 
         <div className="hidden md:block">
           <Button asChild variant="brand" size="lg">
-            <Link to="/contact">Ζήτα Προσφορά</Link>
+            <Link to="/contact">{t.header.cta}</Link>
           </Button>
         </div>
 
-        <button
-          type="button"
-          className="grid size-11 place-items-center rounded-md text-foreground md:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-label={open ? "Κλείσιμο μενού" : "Άνοιγμα μενού"}
-          aria-expanded={open}
-        >
-          {open ? <X className="size-6" /> : <Menu className="size-6" />}
-        </button>
+        <div className="flex items-center gap-1 md:hidden">
+          <LanguageSwitcher className="text-foreground hover:bg-secondary" />
+          <button
+            type="button"
+            className="grid size-11 place-items-center rounded-md text-foreground"
+            onClick={() => setOpen((v) => !v)}
+            aria-label={open ? t.header.closeMenu : t.header.openMenu}
+            aria-expanded={open}
+          >
+            {open ? <X className="size-6" /> : <Menu className="size-6" />}
+          </button>
+        </div>
       </div>
 
       {open && (
         <div className="border-t border-border md:hidden">
-          <nav className="container-x flex flex-col py-3" aria-label="Κύρια πλοήγηση κινητού">
+          <nav className="container-x flex flex-col py-3" aria-label={t.header.mobileNav}>
             {nav.map((item) => (
               <Link
                 key={item.to}
@@ -123,10 +133,10 @@ export function Header() {
                 {business.phone}
               </a>
               <div className="flex items-center gap-2 px-3 py-1 text-xs text-muted-foreground">
-                <Clock className="size-3.5" aria-hidden /> {business.availability}
+                <Clock className="size-3.5" aria-hidden /> {t.availability}
               </div>
               <Button asChild variant="brand" className="mx-2 mt-1">
-                <Link to="/contact">Ζήτα Προσφορά</Link>
+                <Link to="/contact">{t.header.cta}</Link>
               </Button>
             </div>
           </nav>
