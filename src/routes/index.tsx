@@ -5,7 +5,6 @@ import { useServices } from "@/lib/services-data";
 import { business } from "@/lib/business";
 import { projectPhotos } from "@/lib/projects-data";
 import { useT } from "@/lib/i18n";
-import heroImg from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -36,7 +35,7 @@ function HomePage() {
       <section className="relative overflow-hidden bg-primary text-primary-foreground">
         <div className="absolute inset-0">
           <img
-            src={heroImg}
+            src="/images/download.jpg"
             alt={t.projects.imgAlt}
             className="size-full object-cover opacity-25"
             width={1600}
