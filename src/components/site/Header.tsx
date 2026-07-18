@@ -5,7 +5,6 @@ import { business } from "@/lib/business";
 import { Button } from "@/components/ui/button";
 import { LanguageSwitcher } from "@/components/site/LanguageSwitcher";
 import { useT } from "@/lib/i18n";
-import logo from "@/assets/logo.png.asset.json";
 
 export function Header() {
   const { t } = useT();
@@ -69,7 +68,7 @@ export function Header() {
             aria-hidden
             className="grid size-10 shrink-0 place-items-center rounded-md bg-primary shadow-sm"
           >
-            <img src={logo.url} alt="" className="size-9" width={36} height={36} />
+            <img src="/images/logo.png" alt="" className="size-9" width={36} height={36} />
           </span>
           <span className="font-display text-base font-semibold leading-tight tracking-tight text-foreground sm:text-lg">
             {business.name}
