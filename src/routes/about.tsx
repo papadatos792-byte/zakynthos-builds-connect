@@ -3,7 +3,7 @@ import { ShieldCheck, Award, Heart, Target, Handshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { business } from "@/lib/business";
 import { useT } from "@/lib/i18n";
-import logo from "@/assets/logo.png.asset.json";
+
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -44,7 +44,7 @@ export function AboutPage() {
           <div className="lg:col-span-5">
             <div className="grid aspect-square place-items-center rounded-2xl border border-border bg-primary p-10 shadow-card">
               <img
-                src={logo.url}
+                src="/images/logo.png"
                 alt={business.name}
                 width={400}
                 height={400}
